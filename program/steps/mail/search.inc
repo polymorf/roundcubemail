@@ -31,6 +31,7 @@ $str     = get_input_value('_q', RCUBE_INPUT_GET, true);
 $mbox    = get_input_value('_mbox', RCUBE_INPUT_GET, true);
 $filter  = get_input_value('_filter', RCUBE_INPUT_GET);
 $headers = get_input_value('_headers', RCUBE_INPUT_GET);
+$all_folders_search=get_input_value('_allfolders', RCUBE_INPUT_GET);
 $subject = array();
 
 $search_request = md5($mbox.$filter.$str);
@@ -107,23 +108,49 @@ $search_str  = trim($search_str);
 $sort_column = rcmail_sort_column();
 
 // execute IMAP search
-if ($search_str)
-  $RCMAIL->storage->search($mbox, $search_str, $imap_charset, $sort_column);
 
-// save search results in session
-if (!is_array($_SESSION['search']))
-  $_SESSION['search'] = array();
+if ( $all_folders_search ) {
+	// do a multi-folder search
+	$result_h = array();
+	$count=0;
+	foreach($RCMAIL->imap->list_mailboxes() as $mbox) {
+		if ($search_str)
+			$RCMAIL->storage->search($mbox, $search_str, $imap_charset, $sort_column);
 
-if ($search_str) {
-  $_SESSION['search'] = $RCMAIL->storage->get_search_set();
-  $_SESSION['last_text_search'] = $str;
+		// save search results in session
+		if (!is_array($_SESSION['search']))
+			$_SESSION['search'] = array();
+
+		if ($search_str) {
+			$_SESSION['search'] = array_merge($_SESSION['search'], $RCMAIL->storage->get_search_set());
+			$_SESSION['last_text_search'] = $str;
+		}
+		$_SESSION['search_request'] = $search_request;
+
+
+		// Get the headers
+		$result_h = array_merge($result_h, $RCMAIL->storage->list_messages($mbox, 1, $sort_column, rcmail_sort_order()));
+		$count += $RCMAIL->storage->count($mbox, $RCMAIL->storage->get_threading() ? 'THREADS' : 'ALL');
+	}
+}else{
+	if ($search_str)
+	  $RCMAIL->storage->search($mbox, $search_str, $imap_charset, $sort_column);
+
+	// save search results in session
+	if (!is_array($_SESSION['search']))
+	  $_SESSION['search'] = array();
+
+	if ($search_str) {
+	  $_SESSION['search'] = $RCMAIL->storage->get_search_set();
+	  $_SESSION['last_text_search'] = $str;
+	}
+	$_SESSION['search_request'] = $search_request;
+
+
+	// Get the headers
+	$result_h = $RCMAIL->storage->list_messages($mbox, 1, $sort_column, rcmail_sort_order());
+	$count = $RCMAIL->storage->count($mbox, $RCMAIL->storage->get_threading() ? 'THREADS' : 'ALL');
 }
-$_SESSION['search_request'] = $search_request;
-
-
-// Get the headers
-$result_h = $RCMAIL->storage->list_messages($mbox, 1, $sort_column, rcmail_sort_order());
-$count = $RCMAIL->storage->count($mbox, $RCMAIL->storage->get_threading() ? 'THREADS' : 'ALL');
 
 // Make sure we got the headers
 if (!empty($result_h)) {

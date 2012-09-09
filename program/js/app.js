@@ -3602,8 +3602,13 @@ function rcube_webmail()
         mods = mods[mbox] ? mods[mbox] : mods['*'];
 
       if (mods) {
-        for (n in mods)
-          mods_arr.push(n);
+        for (n in mods) {
+          if ( n != 'allfolders' ) {
+            mods_arr.push(n);
+          }else{
+            url._allfolders = 1;
+          }
+        }
         url._headers = mods_arr.join(',');
       }
     }
