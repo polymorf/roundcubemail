@@ -167,6 +167,7 @@ $labels['resetsearch'] = 'Reset search';
 $labels['searchmod'] = 'Search modifiers';
 $labels['msgtext'] = 'Entire message';
 $labels['allfolders'] = 'All folders';
+$labels['mailbox'] = 'Folder';
 $labels['openinextwin'] = 'Open in new window';
 $labels['emlsave'] = 'Download (.eml)';
 $labels['editasnew'] = 'Edit as new';

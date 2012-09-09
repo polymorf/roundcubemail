@@ -433,6 +433,10 @@ a.iconbutton.threadmode.selected {
 	width: 125px;
 }
 
+#messagelist tr td.mailbox {
+	width: 125px;
+}
+
 #messagelist tr.message {
 /*	background-color: #fff; */
 }

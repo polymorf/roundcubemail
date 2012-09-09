@@ -223,6 +223,8 @@ function rcmail_message_list($attrib)
     array_unshift($a_show_cols, 'subject');
   if (!in_array('threads', $a_show_cols))
     array_unshift($a_show_cols, 'threads');
+  if (!in_array('mailbox', $a_show_cols))
+    array_unshift($a_show_cols, 'mailbox');
 
   $skin_path = $_SESSION['skin_path'] = $CONFIG['skin_path'];
 
@@ -955,7 +957,7 @@ function rcmail_message_headers($attrib, $headers=NULL)
 
   // show these headers
   $standard_headers = array('subject', 'from', 'to', 'cc', 'bcc', 'replyto',
-    'mail-reply-to', 'mail-followup-to', 'date', 'priority');
+    'mail-reply-to', 'mail-followup-to', 'date', 'priority', 'mailbox');
   $exclude_headers = $attrib['exclude'] ? explode(',', $attrib['exclude']) : array();
   $output_headers = array();
 
