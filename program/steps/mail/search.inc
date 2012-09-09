@@ -109,6 +109,7 @@ $sort_column = rcmail_sort_column();
 
 // execute IMAP search
 
+$count_display=0;
 if ( $all_folders_search ) {
 	// do a multi-folder search
 	$result_h = array();
@@ -130,7 +131,8 @@ if ( $all_folders_search ) {
 
 		// Get the headers
 		$result_h = array_merge($result_h, $RCMAIL->storage->list_messages($mbox, 1, $sort_column, rcmail_sort_order()));
-		$count += $RCMAIL->storage->count($mbox, $RCMAIL->storage->get_threading() ? 'THREADS' : 'ALL');
+		$count = $count + $RCMAIL->storage->count($mbox, $RCMAIL->storage->get_threading() ? 'THREADS' : 'ALL');
+		$count_display= $count_display + $RCMAIL->storage->count(NULL, 'ALL');
 	}
 }else{
 	if ($search_str)
@@ -150,13 +152,14 @@ if ( $all_folders_search ) {
 	// Get the headers
 	$result_h = $RCMAIL->storage->list_messages($mbox, 1, $sort_column, rcmail_sort_order());
 	$count = $RCMAIL->storage->count($mbox, $RCMAIL->storage->get_threading() ? 'THREADS' : 'ALL');
+	$count_display=$RCMAIL->storage->count(NULL, 'ALL');
 }
 
 // Make sure we got the headers
 if (!empty($result_h)) {
   rcmail_js_message_list($result_h);
   if ($search_str)
-    $OUTPUT->show_message('searchsuccessful', 'confirmation', array('nr' => $RCMAIL->storage->count(NULL, 'ALL')));
+    $OUTPUT->show_message('searchsuccessful', 'confirmation', array('nr' => $count_display));
 }
 // handle IMAP errors (e.g. #1486905)
 else  if ($err_code = $RCMAIL->storage->get_error_code()) {
