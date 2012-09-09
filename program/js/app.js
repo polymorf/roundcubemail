@@ -1686,8 +1686,8 @@ function rcube_webmail()
   // create a table row in the message list
   this.add_message_row = function(uid, cols, flags, attop)
   {
-    //if (!this.gui_objects.messagelist || !this.message_list)
-    //  return false;
+    if (!this.gui_objects.messagelist || !this.message_list)
+      return false;
 
     // Prevent from adding messages from different folder (#1487752)
     //if (flags.mbox != this.env.mailbox && !flags.skip_mbox_check)
@@ -1915,8 +1915,9 @@ function rcube_webmail()
     var mbox;
     if ( id.indexOf('_') != -1 ) {
       var id_splited=id.split('_');
-      id = id_splited[1];
-      mbox= id_splited[0];
+      id = id_splited[0];
+      id_splited.splice(0,1);
+      mbox= id_splited.join('_');
     }else{
       mbox=this.env.mailbox;
     }

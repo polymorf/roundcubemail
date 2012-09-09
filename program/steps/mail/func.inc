@@ -363,7 +363,7 @@ function rcmail_js_message_list($a_headers, $insert_top=FALSE, $a_show_cols=null
       $a_msg_cols = array_merge($a_msg_cols, $header->list_cols);
 
     if ( $current_mbox != $header->mailbox ) {
-      $header->uid = $header->mailbox."_".$header->uid;
+      $header->uid = $header->uid."_".$header->mailbox;
     }
     $OUTPUT->command('add_message_row',
       $header->uid,
