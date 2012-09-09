@@ -1686,12 +1686,12 @@ function rcube_webmail()
   // create a table row in the message list
   this.add_message_row = function(uid, cols, flags, attop)
   {
-    if (!this.gui_objects.messagelist || !this.message_list)
-      return false;
+    //if (!this.gui_objects.messagelist || !this.message_list)
+    //  return false;
 
     // Prevent from adding messages from different folder (#1487752)
-    if (flags.mbox != this.env.mailbox && !flags.skip_mbox_check)
-      return false;
+    //if (flags.mbox != this.env.mailbox && !flags.skip_mbox_check)
+    //  return false;
 
     if (!this.env.messages[uid])
       this.env.messages[uid] = {};
@@ -1912,10 +1912,17 @@ function rcube_webmail()
   {
     if (!id)
       return;
-
+    var mbox;
+    if ( id.indexOf('_') != -1 ) {
+      var id_splited=id.split('_');
+      id = id_splited[1];
+      mbox= id_splited[0];
+    }else{
+      mbox=this.env.mailbox;
+    }
     var win, target = window,
       action = preview ? 'preview': 'show',
-      url = '&_action='+action+'&_uid='+id+'&_mbox='+urlencode(this.env.mailbox);
+      url = '&_action='+action+'&_uid='+id+'&_mbox='+urlencode(mbox);
 
     if (preview && (win = this.get_frame_window(this.env.contentframe))) {
       target = win;

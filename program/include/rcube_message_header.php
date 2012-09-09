@@ -43,6 +43,13 @@ class rcube_message_header
     public $uid;
 
     /**
+     * Message mailbox
+     *
+     * @var string
+     */
+    public $mailbox;
+
+    /**
      * Message subject
      *
      * @var string

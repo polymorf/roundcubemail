@@ -2057,6 +2057,7 @@ class rcube_imap_generic
                 $result[$id]->id        = $id;
                 $result[$id]->subject   = '';
                 $result[$id]->messageID = 'mid:' . $id;
+                $result[$id]->mailbox   = $mailbox;
 
                 $headers = null;
                 $lines   = array();

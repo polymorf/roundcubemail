@@ -267,7 +267,7 @@ function rcmail_js_message_list($a_headers, $insert_top=FALSE, $a_show_cols=null
     $head_replace = true;
   }
 
-  $mbox = $RCMAIL->storage->get_folder();
+  $current_mbox = $RCMAIL->storage->get_folder();
 
   // make sure 'threads' and 'subject' columns are present
   if (!in_array('subject', $a_show_cols))
@@ -352,7 +352,7 @@ function rcmail_js_message_list($a_headers, $insert_top=FALSE, $a_show_cols=null
       $a_msg_flags['prio'] = (int) $header->priority;
 
     $a_msg_flags['ctype'] = Q($header->ctype);
-    $a_msg_flags['mbox'] = $mbox;
+    $a_msg_flags['mbox'] = $header->mailbox;
 
     // merge with plugin result (Deprecated, use $header->flags)
     if (!empty($header->list_flags) && is_array($header->list_flags))
@@ -360,6 +360,9 @@ function rcmail_js_message_list($a_headers, $insert_top=FALSE, $a_show_cols=null
     if (!empty($header->list_cols) && is_array($header->list_cols))
       $a_msg_cols = array_merge($a_msg_cols, $header->list_cols);
 
+    if ( $current_mbox != $header->mailbox ) {
+      $header->uid = $header->mailbox."_".$header->uid;
+    }
     $OUTPUT->command('add_message_row',
       $header->uid,
       $a_msg_cols,
