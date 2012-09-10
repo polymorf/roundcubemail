@@ -78,6 +78,7 @@ if (empty($RCMAIL->action) || $RCMAIL->action == 'list') {
       $RCMAIL->storage->search($mbox_name, $_SESSION['search_filter'], RCMAIL_CHARSET, rcmail_sort_column());
       $_SESSION['search'] = $RCMAIL->storage->get_search_set();
       $_SESSION['search_request'] = $search_request;
+      $_SESSION['last_search_all_folders_search'] = 0;
       $OUTPUT->set_env('search_request', $search_request);
     }
 
