@@ -125,6 +125,7 @@ if ( $all_folders_search ) {
 		if ($search_str) {
 			$_SESSION['search'] = array_merge($_SESSION['search'], $RCMAIL->storage->get_search_set());
 			$_SESSION['last_text_search'] = $str;
+			$_SESSION['last_search_all_folders_search'] = $all_folders_search;
 		}
 		$_SESSION['search_request'] = $search_request;
 
@@ -140,11 +141,12 @@ if ( $all_folders_search ) {
 
 	// save search results in session
 	if (!is_array($_SESSION['search']))
-	  $_SESSION['search'] = array();
+		$_SESSION['search'] = array();
 
 	if ($search_str) {
-	  $_SESSION['search'] = $RCMAIL->storage->get_search_set();
-	  $_SESSION['last_text_search'] = $str;
+		$_SESSION['search'] = $RCMAIL->storage->get_search_set();
+		$_SESSION['last_text_search'] = $str;
+		$_SESSION['last_search_all_folders_search'] = $all_folders_search;
 	}
 	$_SESSION['search_request'] = $search_request;
 
