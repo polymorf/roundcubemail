@@ -135,6 +135,7 @@ if ( $all_folders_search ) {
 		$count = $count + $RCMAIL->storage->count($mbox, $RCMAIL->storage->get_threading() ? 'THREADS' : 'ALL');
 		$count_display= $count_display + $RCMAIL->storage->count(NULL, 'ALL');
 	}
+	$result_h = $RCMAIL->storage->sort_messages($result_h,$sort_column,rcmail_sort_order());
 }else{
 	if ($search_str)
 	  $RCMAIL->storage->search($mbox, $search_str, $imap_charset, $sort_column);

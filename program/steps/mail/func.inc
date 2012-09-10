@@ -391,7 +391,7 @@ function rcmail_message_list_head($attrib, $a_show_cols)
   $sort_order = $_SESSION['sort_order'];
 
   // define sortable columns
-  $a_sort_cols = array('subject', 'date', 'from', 'to', 'fromto', 'size', 'cc');
+  $a_sort_cols = array('subject', 'date', 'from', 'to', 'fromto', 'size', 'cc', 'mailbox');
 
   if (!empty($attrib['optionsmenuicon'])) {
     $onclick = 'return ' . JS_OBJECT_NAME . ".command('menu-open', 'messagelistmenu')";

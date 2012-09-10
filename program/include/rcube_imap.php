@@ -698,6 +698,54 @@ class rcube_imap extends rcube_storage
         return (int)$count;
     }
 
+    /**
+     * Public method for sorting messages, imap server not used
+     *
+     * @param   string   $a_headers  messages headers to sort
+     * @param   string   $sort_field Header field to sort by
+     * @param   string   $sort_order Sort order [ASC|DESC]
+     *
+     * @return  array    Indexed array with message header objects
+     */
+    public function sort_messages($a_headers=array(), $sort_field=NULL, $sort_order=NULL)
+    {
+        return $this->_sort_messages($a_headers, $sort_field, $sort_order);
+    }
+
+    /**
+     * protected method for listing message headers
+     *
+     * @param   string   $a_headers  messages headers to sort
+     * @param   string   $sort_field Header field to sort by
+     * @param   string   $sort_order Sort order [ASC|DESC]
+     *
+     * @return  array    Indexed array with message header objects
+     */
+    protected function _sort_messages($a_headers=array(), $sort_field=NULL, $sort_order=NULL)
+    {
+      // build array of sort_field
+      $tmp_array=array();
+      foreach( $a_headers as $msg => $headers ) {
+        $tmp_array["$msg"]=$headers->$sort_field;
+      }
+      switch($sort_order) {
+        case "DESC":
+          arsort($tmp_array);
+          break;
+        case "ASC":
+          asort($tmp_array);
+          break;
+        default:
+          return $a_headers;
+      }
+      $id=0;
+      $return_array=array();
+      foreach( $tmp_array as $old_id => $sorted_field ) {
+        $return_array[$id]=$a_headers[$old_id];
+        $id++;
+      }
+      return $return_array;
+    }
 
     /**
      * Public method for listing headers

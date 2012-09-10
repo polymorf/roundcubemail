@@ -63,13 +63,14 @@ if ($_SESSION['search_filter'] && $_SESSION['search_filter'] != 'ALL')
 
 // fetch message headers
 if ($count = $RCMAIL->storage->count($mbox_name, $threading ? 'THREADS' : 'ALL', !empty($_REQUEST['_refresh']))) {
-  if ( $_SESSION["last_search_all_folders_search"] == 1 ) {
+  if ( $_SESSION["last_search_all_folders_search"] == 1 && isset($_REQUEST['_search'])) {
     $a_headers = array();
     foreach($RCMAIL->imap->list_mailboxes() as $mbox) {
       $RCMAIL->storage->folder_sync($mbox);
       $RCMAIL->storage->search($mbox, $_SESSION['search_filter'], RCMAIL_CHARSET, rcmail_sort_column());
-      $a_headers = array_merge($a_headers, $RCMAIL->storage->list_messages($mbox, NULL, rcmail_sort_column(), rcmail_sort_order()));
+      $a_headers = array_merge($a_headers, $RCMAIL->storage->list_messages($mbox, NULL, NULL, NULL));
     }
+    $a_headers = $RCMAIL->storage->sort_messages($a_headers,rcmail_sort_column(),rcmail_sort_order());
   }else{
     $a_headers = $RCMAIL->storage->list_messages($mbox_name, NULL, rcmail_sort_column(), rcmail_sort_order());
   }
