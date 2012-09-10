@@ -710,9 +710,8 @@ function rcube_mail_ui()
       return;
 
     $('input:checkbox[name="s_mods[]"]').map(function() {
-      if (this == elem)
+      if (this == elem || this.value == 'allfolders')
         return;
-
       this.checked = true;
       if (elem.checked) {
         this.disabled = true;
