@@ -763,6 +763,9 @@ class rcube_imap extends rcube_storage
         if (!strlen($folder)) {
             $folder = $this->folder;
         }
+        if ( $sort_field == "mailbox" ) {
+            $sort_field = NULL;
+        }
 
         return $this->_list_messages($folder, $page, $sort_field, $sort_order, $slice);
     }
@@ -1413,6 +1416,10 @@ class rcube_imap extends rcube_storage
     {
         if (!$str) {
             $str = 'ALL';
+        }
+        # no mailbox search on server side
+        if ( $sort_field == "mailbox" ) {
+            $sort_field = NULL;
         }
 
         if (!strlen($folder)) {
