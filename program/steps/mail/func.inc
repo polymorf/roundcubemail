@@ -332,6 +332,8 @@ function rcmail_js_message_list($a_headers, $insert_top=FALSE, $a_show_cols=null
         $cont = show_bytes($header->$col);
       else if ($col == 'date')
         $cont = format_date($header->date);
+      else if ($col == 'mailbox')
+        $cont = rcube_charset::convert($header->mailbox,'UTF7-IMAP');
       else
         $cont = Q($header->$col);
 
