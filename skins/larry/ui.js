@@ -579,6 +579,10 @@ function rcube_mail_ui()
 	      this.checked = true;
 	      this.disabled = this.value != all;
 	  }
+	  else
+	  {
+	      $('#s_mod_allfolders').prop('checked', mods['allfolders'] );
+	  }
         });
       else {
         list.prop('disabled', false).prop('checked', false);

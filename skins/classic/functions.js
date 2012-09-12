@@ -223,6 +223,10 @@ searchmenu: function(show)
 	      this.checked = true;
 	      this.disabled = this.value != all
 	  }
+	  else
+	  {
+	      $('#s_mod_allfolders').prop('checked', mods['allfolders'] );
+	  }
         });
       else {
         list.prop('disabled', false).prop('checked', false);
