@@ -102,7 +102,8 @@ init: function()
 init_row: function(row)
 {
   // make references in internal array and set event handlers
-  if (row && String(row.id).match(/^rcmrow([a-z0-9\-_=\.\+\/]+)/i)) {
+  //if (row && String(row.id).match(/^rcmrow([a-z0-9\-_=\.\+\/]+)/i)) {
+  if (row && String(row.id).match(/^rcmrow([a-z0-9\-_=\.\+\/& ]+)/i)) {
     var self = this,
       uid = RegExp.$1;
     row.uid = uid;
