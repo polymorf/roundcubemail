@@ -89,6 +89,7 @@ else if (strlen(trim($str)))
     // save search modifiers for the current folder to user prefs
     $search_mods = $RCMAIL->config->get('search_mods', $SEARCH_MODS_DEFAULT);
     $search_mods[$mbox] = array_fill_keys(array_keys($subject), 1);
+    $search_mods[$mbox]['allfolders'] = $all_folders_search;
     $RCMAIL->user->save_prefs(array('search_mods' => $search_mods));
   } else {
     // search in subject by default
