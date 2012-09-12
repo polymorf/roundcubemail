@@ -574,8 +574,11 @@ function rcube_mail_ui()
 
       if (mods[all])
         list.map(function() {
-          this.checked = true;
-          this.disabled = this.value != all;
+	  if( this.value != 'allfolders' )
+	  {
+	      this.checked = true;
+	      this.disabled = this.value != all;
+	  }
         });
       else {
         list.prop('disabled', false).prop('checked', false);

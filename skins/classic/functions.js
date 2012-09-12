@@ -218,8 +218,11 @@ searchmenu: function(show)
 
       if (mods[all])
         list.map(function() {
-          this.checked = true;
-          this.disabled = this.value != all;
+	  if( this.value != 'allfolders' )
+	  {
+	      this.checked = true;
+	      this.disabled = this.value != all
+	  }
         });
       else {
         list.prop('disabled', false).prop('checked', false);
@@ -261,7 +264,7 @@ set_searchmod: function(elem)
     return;
 
   $('input:checkbox[name="s_mods[]"]').map(function() {
-    if (this == elem)
+    if (this == elem || this.value == 'allfolders')
       return;
 
     this.checked = true;
