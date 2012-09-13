@@ -116,15 +116,17 @@ if ( $all_folders_search ) {
 	$result_h = array();
 	$count=0;
 	foreach($RCMAIL->imap->list_mailboxes() as $mbox) {
-		if ($search_str)
+		if ($search_str) {
 			$RCMAIL->storage->search($mbox, $search_str, $imap_charset, $sort_column);
+			$_SESSION['last_search_string'] = $search_str;
+		}
 
 		// save search results in session
 		if (!is_array($_SESSION['search']))
 			$_SESSION['search'] = array();
 
 		if ($search_str) {
-			$_SESSION['search'] = array_merge($_SESSION['search'], $RCMAIL->storage->get_search_set());
+			$_SESSION['search'] = $RCMAIL->storage->get_search_set();
 			$_SESSION['last_text_search'] = $str;
 			$_SESSION['last_search_all_folders_search'] = $all_folders_search;
 		}
