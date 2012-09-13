@@ -218,15 +218,13 @@ searchmenu: function(show)
 
       if (mods[all])
         list.map(function() {
-	  if( this.value != 'allfolders' )
-	  {
-	      this.checked = true;
-	      this.disabled = this.value != all
-	  }
-	  else
-	  {
-	      $('#s_mod_allfolders').prop('checked', mods['allfolders'] );
-	  }
+          if( this.value != 'allfolders' ) {
+            this.checked = true;
+            this.disabled = this.value != all
+          }
+          else {
+            $('#s_mod_allfolders').prop('checked', mods['allfolders'] );
+          }
         });
       else {
         list.prop('disabled', false).prop('checked', false);
